@@ -1,8 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
-import util.GetGithubIssueTool;
+import util.GithubIssueTool;
 
-public class GetGithubIssueToolTest {
+public class GithubIssueToolTest {
 
   @Test
   public void testGetCommonList(){
@@ -10,9 +10,9 @@ public class GetGithubIssueToolTest {
     String owner = "Sicmatr1x";
     String repo = "CommandTest";
     String issueNumber = "1";
-    GetGithubIssueTool getGithubIssueTool = new GetGithubIssueTool(owner, repo, issueNumber);
+    GithubIssueTool githubIssueTool = new GithubIssueTool(owner, repo, issueNumber);
     // When
-    String responseJson = getGithubIssueTool.getCommonList();
+    String responseJson = githubIssueTool.getCommonList();
     // Then
     Assert.assertNotNull(responseJson);
   }

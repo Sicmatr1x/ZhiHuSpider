@@ -1,7 +1,7 @@
 import beans.IssueComment;
 import org.junit.Assert;
 import org.junit.Test;
-import util.GetGithubIssueTool;
+import util.GithubIssueTool;
 import util.JsonCovertoner;
 
 public class JsonCovertonerTest {
@@ -12,9 +12,9 @@ public class JsonCovertonerTest {
     String owner = "Sicmatr1x";
     String repo = "CommandTest";
     String issueNumber = "1";
-    GetGithubIssueTool getGithubIssueTool = new GetGithubIssueTool(owner, repo, issueNumber);
+    GithubIssueTool githubIssueTool = new GithubIssueTool(owner, repo, issueNumber);
     JsonCovertoner jsonCovertoner = new JsonCovertoner();
-    String responseJson = getGithubIssueTool.getCommonList();
+    String responseJson = githubIssueTool.getCommonList();
     // When
     IssueComment[] issueCommentList = jsonCovertoner.getIssueCommentList(responseJson);
     // Then

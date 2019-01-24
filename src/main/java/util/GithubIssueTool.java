@@ -10,17 +10,54 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-public class GetGithubIssueTool {
+public class GithubIssueTool {
   private final static String GET_ISSUE_COMMENT_LIST_URL = "https://api.github.com/repos/:owner/:repo/issues/:number/comments";
 
   private String owner;
   private String repo;
   private String issueNumber;
 
-  public GetGithubIssueTool(String owner, String repo, String issueNumber) {
+  public GithubIssueTool() {
+
+  }
+
+  public GithubIssueTool(String owner, String repo, String issueNumber) {
     this.owner = owner;
     this.repo = repo;
     this.issueNumber = issueNumber;
+  }
+
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
+
+  public String getRepo() {
+    return repo;
+  }
+
+  public void setRepo(String repo) {
+    this.repo = repo;
+  }
+
+  public String getIssueNumber() {
+    return issueNumber;
+  }
+
+  public void setIssueNumber(String issueNumber) {
+    this.issueNumber = issueNumber;
+  }
+
+  @Override
+  public String toString() {
+    return "GithubIssueTool{" +
+        "owner='" + owner + '\'' +
+        ", repo='" + repo + '\'' +
+        ", issueNumber='" + issueNumber + '\'' +
+        '}';
   }
 
   private String initURL(){
