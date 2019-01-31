@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "dca1485c-105f-4cc5-b513-f46bd16f5d18",
+		"name": "GitHub V3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Repositories]Get repos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/octokit/octokit.rb",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						"octokit",
+						"octokit.rb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Issue]Get Issue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo/issues/:number",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo",
+						"issues",
+						":number"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "Sicmatr1x"
+						},
+						{
+							"key": "repo",
+							"value": "CommandTest"
+						},
+						{
+							"key": "number",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Comments]Get issue comments List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo/issues/:number/comments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo",
+						"issues",
+						":number",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "Sicmatr1x"
+						},
+						{
+							"key": "repo",
+							"value": "CommandTest"
+						},
+						{
+							"key": "number",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Comments]Create a comments",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "005fe48246404ea23b869b87d17d5577cb99d7ef",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"body\": \"Me too\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.github.com/repos/:owner/:repo/issues/:number/comments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"repos",
+						":owner",
+						":repo",
+						"issues",
+						":number",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "owner",
+							"value": "Sicmatr1x"
+						},
+						{
+							"key": "repo",
+							"value": "CommandTest"
+						},
+						{
+							"key": "number",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aeb915e7-b9d8-44de-8a66-bbd4948be969",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1d477e84-bcb3-4f7b-b6ba-903fc01b826e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
