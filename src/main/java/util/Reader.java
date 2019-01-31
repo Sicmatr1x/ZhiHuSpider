@@ -3,16 +3,15 @@ package util;
 import beans.Setting;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class SettingReader {
+public class Reader {
 
-  private static String SETTING_FILE_NAME = "setting.json";
-
-  private static String readFile(){
-    File file = new File(SETTING_FILE_NAME);
+  public static String readFile(String path) {
+    File file = new File(path);
     BufferedReader reader = null;
     try {
       reader = new BufferedReader(new FileReader(file));
@@ -36,16 +35,4 @@ public class SettingReader {
     return null;
   }
 
-  public static Setting getSetting(){
-    ObjectMapper objectMapper = new ObjectMapper();
-    String json = readFile();
-    System.out.println(json);
-    try {
-      Setting setting = objectMapper.readValue(json, Setting.class);
-      return setting;
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
 }

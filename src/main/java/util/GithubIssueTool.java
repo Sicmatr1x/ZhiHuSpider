@@ -1,5 +1,6 @@
 package util;
 
+import beans.IssueComment;
 import java.io.IOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -9,6 +10,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class GithubIssueTool {
   private final static String GET_ISSUE_COMMENT_LIST_URL = "https://api.github.com/repos/:owner/:repo/issues/:number/comments";
@@ -66,7 +70,22 @@ public class GithubIssueTool {
     return URL;
   }
 
-  public String getCommonList(){
+  public IssueComment[] getIssueCommentList(){
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      IssueComment[] issueCommentList = objectMapper.readValue(this.getCommonList(), IssueComment[].class);
+      return issueCommentList;
+    } catch (JsonParseException e) {
+      e.printStackTrace();
+    } catch (JsonMappingException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  private String getCommonList(){
     CloseableHttpClient httpclient = HttpClients.createDefault();
     try {
       // 创建httpget.

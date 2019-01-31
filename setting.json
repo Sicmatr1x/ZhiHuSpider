@@ -1,8 +1,9 @@
 {
-  "downloadPath": "D:/",
+  "downloadPath": "D:/webpage",
   "githubIssueTool": {
     "owner": "Sicmatr1x",
     "repo": "CommandTest",
-    "issueNumber": "1"
-  }
+    "issueNumber": "3"
+  },
+  "lastWorkId": 458436585
 }

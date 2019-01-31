@@ -1,12 +1,19 @@
 package beans;
 
+import java.io.IOException;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.ObjectMapper;
 import util.GithubIssueTool;
+import util.Reader;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Setting {
+
+  private static String SETTING_FILE_NAME = "setting.json";
+
   private String downloadPath;
   private GithubIssueTool githubIssueTool;
+  private int lastWorkId;
 
   public String getDownloadPath() {
     return downloadPath;
@@ -24,11 +31,33 @@ public class Setting {
     this.githubIssueTool = githubIssueTool;
   }
 
+  public int getLastWorkId() {
+    return lastWorkId;
+  }
+
+  public void setLastWorkId(int lastWorkId) {
+    this.lastWorkId = lastWorkId;
+  }
+
   @Override
   public String toString() {
     return "Setting{" +
         "downloadPath='" + downloadPath + '\'' +
         ", githubIssueTool=" + githubIssueTool +
+        ", lastWorkId=" + lastWorkId +
         '}';
+  }
+
+  public static Setting getSetting() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    String json = Reader.readFile(SETTING_FILE_NAME);
+    System.out.println(json);
+    try {
+      Setting setting = objectMapper.readValue(json, Setting.class);
+      return setting;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

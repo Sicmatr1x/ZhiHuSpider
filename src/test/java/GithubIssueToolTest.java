@@ -1,3 +1,4 @@
+import beans.IssueComment;
 import org.junit.Assert;
 import org.junit.Test;
 import util.GithubIssueTool;
@@ -9,11 +10,14 @@ public class GithubIssueToolTest {
     // Given
     String owner = "Sicmatr1x";
     String repo = "CommandTest";
-    String issueNumber = "1";
+    String issueNumber = "3";
     GithubIssueTool githubIssueTool = new GithubIssueTool(owner, repo, issueNumber);
     // When
-    String responseJson = githubIssueTool.getCommonList();
+    IssueComment[] issueCommentList = githubIssueTool.getIssueCommentList();
     // Then
-    Assert.assertNotNull(responseJson);
+    for(IssueComment issueComment : issueCommentList){
+      System.out.println(issueComment);
+    }
+    Assert.assertNotNull(issueCommentList);
   }
 }
