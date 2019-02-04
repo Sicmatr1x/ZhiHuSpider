@@ -47,15 +47,15 @@ public class MainProcess {
       String address = this.issueCommentList[i].getBody();
       downloadNum++;
       System.out.println("[MainProcess]:" + this.issueCommentList[i]);
-      boolean isRegonizedDomain = false;
+      boolean isRecognizedDomain = false;
       for (Map.Entry<String, HtmlUtil> entry : this.htmlUtilMap.entrySet()) {
         if (address.contains(entry.getKey())) {
           this.downloadWebPage(address, entry.getValue());
           System.out.println(entry.getKey() + ":" + entry.getValue());
-          isRegonizedDomain = true;
+          isRecognizedDomain = true;
           break;
         }
-        if (!isRegonizedDomain) {// 若下载页面没有对应的解析器
+        if (!isRecognizedDomain) {// 若下载页面没有对应的解析器
           // 使用默认解析器下载
         }
       }

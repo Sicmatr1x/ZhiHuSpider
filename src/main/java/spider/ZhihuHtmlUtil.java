@@ -2,29 +2,43 @@ package spider;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import spider.util.ImgDownloader;
 import spider.util.ImgTranslator;
 
 public class ZhihuHtmlUtil extends HtmlUtil implements ImgTranslator {
 
   public static final String DOMAIN = "https://www.zhihu.com/";
 
+  /**
+   * 获取img dom
+   * @param element
+   * @return
+   */
   @Override
   public Element translate(Element element) {
     element.select("noscript").first().remove();
     Elements imgElements = element.select("img");
     for(Element imgElement : imgElements){
-      String srcAddress = imgElement.attr("data-default-watermark-src");
+      String srcAddress = imgElement.attr("data-original");
       String rawWidth = imgElement.attr("data-rawwidth");
       String rawHeight = imgElement.attr("data-rawheight");
       imgElement.attr("src", srcAddress);
       imgElement.attr("style", "width:" + rawWidth + ";height:" + rawHeight);
-      imgElement.removeClass("data-caption");
-      imgElement.removeClass("data-size");
-      imgElement.removeClass("data-caption");
-      imgElement.removeClass("data-caption");
-      imgElement.removeClass("data-caption");
+      imgElement.removeAttr("data-caption");
+      imgElement.removeAttr("data-size");
+      imgElement.removeAttr("data-rawwidth");
+      imgElement.removeAttr("data-rawheight");
+      imgElement.removeAttr("data-default-watermark-src");
+      imgElement.removeAttr("data-original");
+      imgElement.removeAttr("data-actualsrc");
+      this.downloadImg(imgElement);
     }
     return element;
+  }
+
+  private Element downloadImg(Element element){
+    ImgDownloader imgDownloader = new ImgDownloader();
+    return imgDownloader.translate(element);
   }
 
   /**
