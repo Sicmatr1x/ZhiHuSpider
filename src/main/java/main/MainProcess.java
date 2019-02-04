@@ -51,7 +51,7 @@ public class MainProcess {
       for (Map.Entry<String, HtmlUtil> entry : this.htmlUtilMap.entrySet()) {
         if (address.contains(entry.getKey())) {
           this.downloadWebPage(address, entry.getValue());
-          System.out.println(entry.getKey() + ":" + entry.getValue());
+          System.out.println("load analyzer:Domain=" + entry.getKey() + ":class=" + entry.getValue());
           isRecognizedDomain = true;
           break;
         }

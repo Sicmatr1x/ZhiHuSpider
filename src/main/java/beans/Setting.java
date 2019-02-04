@@ -51,7 +51,6 @@ public class Setting {
   public static Setting getSetting() {
     ObjectMapper objectMapper = new ObjectMapper();
     String json = Reader.readFile(SETTING_FILE_NAME);
-    System.out.println(json);
     try {
       Setting setting = objectMapper.readValue(json, Setting.class);
       return setting;
