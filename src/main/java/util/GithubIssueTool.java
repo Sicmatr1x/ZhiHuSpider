@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -70,6 +71,7 @@ public class GithubIssueTool {
     return URL;
   }
 
+  @JsonIgnore
   public IssueComment[] getIssueCommentList(){
     ObjectMapper objectMapper = new ObjectMapper();
     try {

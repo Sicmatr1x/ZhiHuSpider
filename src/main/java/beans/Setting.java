@@ -1,5 +1,7 @@
 package beans;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -58,5 +60,19 @@ public class Setting {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static void writeSetting(Setting setting) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      File file = new File(SETTING_FILE_NAME);
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+      FileOutputStream out = new FileOutputStream(file, true);
+      objectMapper.writeValue(out, setting);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

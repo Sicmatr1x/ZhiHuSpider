@@ -60,6 +60,7 @@ public class MainProcess {
         }
       }
     }
+    this.setting.setLastWorkId(this.issueCommentList[this.issueCommentList.length - 1].getId());
     return downloadNum;
   }
 
@@ -83,6 +84,10 @@ public class MainProcess {
     return downloadNum;
   }
 
+  private void saveSetting(){
+    Setting.writeSetting(this.setting);
+  }
+
   public void run() {
     this.initSetting();
     this.initHtmlUtilMap();
@@ -92,6 +97,7 @@ public class MainProcess {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    this.saveSetting();
   }
 
   public static void main(String[] args) {
