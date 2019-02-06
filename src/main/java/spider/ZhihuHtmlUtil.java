@@ -2,6 +2,7 @@ package spider;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import spider.util.HeadTitleTranslator;
 import spider.util.ImgDownloader;
 import spider.util.ZhihuImgTranslator;
 
@@ -14,7 +15,7 @@ public class ZhihuHtmlUtil extends HtmlUtil {
    * @param element
    * @return
    */
-  public Element translate(Element element) {
+  public Element translateImgDom(Element element) {
     element.select("noscript").first().remove();
     Elements imgElements = element.select("img");
     ZhihuImgTranslator zhihuImgTranslator = new ZhihuImgTranslator();
@@ -71,15 +72,19 @@ public class ZhihuHtmlUtil extends HtmlUtil {
   }
 
   void analysisPage() {
+    HeadTitleTranslator headTitleTranslator = new HeadTitleTranslator();
+    headTitleTranslator.setFromAddress(this.getAddress());
+
     int endIndex = this.address.indexOf("/", DOMAIN.length());
     String mode = this.address.substring(DOMAIN.length(), endIndex);
     this.title = this.getQuestionTitle();
+    headTitleTranslator.setTitleText(this.title);
 
     if ("question".equals(mode)) {
       if (this.address.contains("answer")) {
         Element answerElement = this.getOneAnswer(); // 单个回答链接
-        answerElement = this.translate(answerElement);
-        this.content = answerElement.html();
+        answerElement = this.translateImgDom(answerElement);
+        this.content = headTitleTranslator.translate(answerElement).html();
 
       } else {
         this.getAnswerList(); // 问题链接

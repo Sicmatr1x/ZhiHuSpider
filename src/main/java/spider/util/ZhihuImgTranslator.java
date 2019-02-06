@@ -1,7 +1,6 @@
 package spider.util;
 
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class ZhihuImgTranslator implements Translator{
 
