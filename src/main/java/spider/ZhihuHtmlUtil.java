@@ -38,7 +38,7 @@ public class ZhihuHtmlUtil extends HtmlUtil implements ImgTranslator {
 
   private Element downloadImg(Element element){
     ImgDownloader imgDownloader = new ImgDownloader();
-    return imgDownloader.translate(element);
+    return imgDownloader.translate(element, this.title);
   }
 
   /**
@@ -84,13 +84,14 @@ public class ZhihuHtmlUtil extends HtmlUtil implements ImgTranslator {
   void analysisPage() {
     int endIndex = this.address.indexOf("/", DOMAIN.length());
     String mode = this.address.substring(DOMAIN.length(), endIndex);
+    this.title = this.getQuestionTitle();
 
     if ("question".equals(mode)) {
       if (this.address.contains("answer")) {
         Element answerElement = this.getOneAnswer(); // 单个回答链接
         answerElement = this.translate(answerElement);
         this.content = answerElement.html();
-        this.title = this.getQuestionTitle();
+
       } else {
         this.getAnswerList(); // 问题链接
       }

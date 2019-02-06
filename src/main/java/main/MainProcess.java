@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import spider.HtmlUtil;
 import spider.ZhihuHtmlUtil;
+import spider.util.FilenameChecker;
 import util.GithubIssueTool;
 import util.Writer;
 
@@ -36,7 +37,7 @@ public class MainProcess {
   public void downloadWebPage(String address, HtmlUtil htmlUtil) throws IOException {
     htmlUtil.setAddress(address);
     htmlUtil.parse();
-    String fileName = htmlUtil.getTitle().replace(":", "-");
+    String fileName = FilenameChecker.getLegalFileName(htmlUtil.getTitle());
     Writer.writeFile(htmlUtil.getContent(),
         Setting.getSetting().getDownloadPath() + "/" + fileName + ".html");
   }

@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.jsoup.nodes.Element;
 
-public class ImgDownloader implements Translator{
+public class ImgDownloader {
 
   private static void downloadPicture(String urlList, String path) {
     URL url = null;
@@ -53,11 +53,10 @@ public class ImgDownloader implements Translator{
     return work[work.length - 1];
   }
 
-  @Override
-  public Element translate(Element element) {
+  public Element translate(Element element, String folderName){
     String srcAddress = element.attr("src");
     String imgName = this.getImgName(srcAddress);
-    String imgRelativePath = "media/" + imgName;
+    String imgRelativePath = FilenameChecker.getLegalFileName(folderName) + "/" + imgName;
     downloadPicture(srcAddress, Setting.getSetting().getDownloadPath() + "/" + imgRelativePath);
     element.attr("src", imgRelativePath);
     element.attr("alt", srcAddress);

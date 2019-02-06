@@ -69,6 +69,7 @@ public class Setting {
       if (!file.exists()) {
         file.createNewFile();
       }
+      file.delete();
       FileOutputStream out = new FileOutputStream(file, true);
       objectMapper.writeValue(out, setting);
     } catch (IOException e) {
