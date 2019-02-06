@@ -57,6 +57,7 @@ public class ImgDownloader {
     String srcAddress = element.attr("src");
     String imgName = this.getImgName(srcAddress);
     String imgRelativePath = FilenameChecker.getLegalFileName(folderName) + "/" + imgName;
+    System.out.println("downloading img:" + imgRelativePath);
     downloadPicture(srcAddress, Setting.getSetting().getDownloadPath() + "/" + imgRelativePath);
     element.attr("src", imgRelativePath);
     element.attr("alt", srcAddress);

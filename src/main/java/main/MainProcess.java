@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import spider.HtmlUtil;
 import spider.ZhihuHtmlUtil;
+import spider.ZhihuZhuanlanHtmlUtil;
 import spider.util.FilenameChecker;
 import util.GithubIssueTool;
 import util.Writer;
@@ -28,6 +29,7 @@ public class MainProcess {
 
   public void initHtmlUtilMap() {
     htmlUtilMap.put(ZhihuHtmlUtil.DOMAIN, new ZhihuHtmlUtil());
+    htmlUtilMap.put(ZhihuZhuanlanHtmlUtil.DOMAIN, new ZhihuZhuanlanHtmlUtil());
   }
 
   public void initCommandList() {
