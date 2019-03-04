@@ -16,7 +16,11 @@ public class ZhihuHtmlUtil extends HtmlUtil {
    * @return
    */
   public Element translateImgDom(Element element) {
-    element.select("noscript").first().remove();
+    Elements noscriptNode = element.select("noscript");
+    if(noscriptNode.size() == 0){
+      return element;
+    }
+    noscriptNode.first().remove();
     Elements imgElements = element.select("img");
     ZhihuImgTranslator zhihuImgTranslator = new ZhihuImgTranslator();
     for(Element imgElement : imgElements){

@@ -10,9 +10,9 @@ public class Writer {
     File file = new File(path);
     if (!file.exists()) {
       file.createNewFile();
+      FileOutputStream out = new FileOutputStream(file, true);
+      out.write(content.getBytes("utf-8"));
+      out.close();
     }
-    FileOutputStream out = new FileOutputStream(file, true);
-    out.write(content.getBytes("utf-8"));
-    out.close();
   }
 }
