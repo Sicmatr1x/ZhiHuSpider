@@ -1,12 +1,25 @@
 package spider.util;
 
+import java.util.Iterator;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
 public class ZhihuImgTranslator implements Translator{
 
   @Override
   public Element translate(Element imgElement) {
-    String srcAddress = imgElement.attr("data-original");
+    String srcAddress = null;
+    // smart get img src url
+    Attributes attrs = imgElement.attributes();
+    Iterator<Attribute> iterator = attrs.iterator();
+    while(iterator.hasNext()){
+      Attribute attr = iterator.next();
+      if(attr.getValue() != null && attr.getValue().contains("http")){
+        srcAddress = attr.getValue();
+      }
+    }
+
     String rawWidth = imgElement.attr("data-rawwidth");
     String rawHeight = imgElement.attr("data-rawheight");
     imgElement.attr("src", srcAddress);
