@@ -22,6 +22,10 @@ public class MainProcess {
 
   private Map<String, HtmlUtil> htmlUtilMap = new HashMap<>();
 
+  public Map<String, HtmlUtil> getHtmlUtilMap() {
+    return htmlUtilMap;
+  }
+
   public void initSetting() {
     this.setting = Setting.getSetting();
     this.githubIssueTool = this.setting.getGithubIssueTool();
@@ -37,11 +41,17 @@ public class MainProcess {
   }
 
   public void downloadWebPage(String address, HtmlUtil htmlUtil) throws IOException {
-    htmlUtil.setAddress(address);
-    htmlUtil.parse();
-    String fileName = FilenameChecker.getLegalFileName(htmlUtil.getTitle());
-    Writer.writeFile(htmlUtil.getContent(),
-        Setting.getSetting().getDownloadPath() + "/" + fileName + ".html");
+    try{
+      htmlUtil.setAddress(address);
+      htmlUtil.parse();
+      String fileName = FilenameChecker.getLegalFileName(htmlUtil.getTitle());
+      Writer.writeFile(htmlUtil.getContent(),
+          Setting.getSetting().getDownloadPath() + "/" + fileName + ".html");
+    }catch(java.lang.NullPointerException error){
+      System.out.println("[downloadWebPage]:fail:" + address);
+      return;
+    }
+
   }
 
   public int downloadWebPageList(int begIndex) throws IOException {
@@ -61,6 +71,13 @@ public class MainProcess {
         if (!isRecognizedDomain) {// 若下载页面没有对应的解析器
           // 使用默认解析器下载
         }
+      }
+
+      try {
+        System.out.println("sleep");
+        Thread.sleep(60 * 1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
     }
     this.setting.setLastWorkId(this.issueCommentList[this.issueCommentList.length - 1].getId());
@@ -107,12 +124,7 @@ public class MainProcess {
     MainProcess mainProcess = new MainProcess();
     while (true) {
       mainProcess.run();
-      try {
-        System.out.println("sleep");
-        Thread.sleep(60 * 1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+      System.out.println("finish");
     }
   }
 }

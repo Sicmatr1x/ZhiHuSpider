@@ -37,7 +37,7 @@ public class ZhihuZhuanlanHtmlUtil extends HtmlUtil{
 
   private Element downloadImg(Element element){
     ImgDownloader imgDownloader = new ImgDownloader();
-    return imgDownloader.translate(element, this.title);
+    return imgDownloader.translate(element, this.title + "_files");
   }
 
   public Element getArticle() {

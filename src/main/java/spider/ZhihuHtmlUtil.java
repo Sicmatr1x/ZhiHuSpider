@@ -1,5 +1,9 @@
 package spider;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import spider.util.HeadTitleTranslator;
@@ -32,7 +36,7 @@ public class ZhihuHtmlUtil extends HtmlUtil {
 
   private Element downloadImg(Element element){
     ImgDownloader imgDownloader = new ImgDownloader();
-    return imgDownloader.translate(element, this.title);
+    return imgDownloader.translate(element, this.title + "_files");
   }
 
   /**
@@ -55,8 +59,20 @@ public class ZhihuHtmlUtil extends HtmlUtil {
   }
 
   public String getQuestionTitle() {
-    Elements question = this.doc.select(".QuestionHeader-title");
-    return question.get(0).text();
+    String title;
+    try{
+      Elements question = this.doc.select(".QuestionHeader-title");
+      if(question.size() < 0){
+        Elements titleNode = this.doc.select("title");
+        System.out.println(titleNode.text());
+        return titleNode.text();
+      }
+      title = question.get(0).text();
+    }catch(java.lang.IndexOutOfBoundsException error){
+      System.out.println("Analyze Page Error:" + this.address);
+      return null;
+    }
+    return title;
   }
 
   public void getAnswerList() {
@@ -82,6 +98,12 @@ public class ZhihuHtmlUtil extends HtmlUtil {
     int endIndex = this.address.indexOf("/", DOMAIN.length());
     String mode = this.address.substring(DOMAIN.length(), endIndex);
     this.title = this.getQuestionTitle();
+    if(this.title == null){
+      return;
+    }
+    if(this.title.equals("知乎 - 有问题，上知乎")){
+      return;
+    }
     headTitleTranslator.setTitleText(this.title);
 
     if ("question".equals(mode)) {

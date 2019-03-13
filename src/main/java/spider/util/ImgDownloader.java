@@ -12,7 +12,7 @@ import org.jsoup.nodes.Element;
 
 public class ImgDownloader {
 
-  private static void downloadPicture(String urlList, String path) {
+  private static void downloadPicture(String urlList, String path) throws java.net.MalformedURLException{
     URL url = null;
     try {
       File imgFile= new File(path);
@@ -58,7 +58,13 @@ public class ImgDownloader {
     String imgName = this.getImgName(srcAddress);
     String imgRelativePath = FilenameChecker.getLegalFileName(folderName) + "/" + imgName;
     System.out.println("downloading img:" + imgRelativePath);
-    downloadPicture(srcAddress, Setting.getSetting().getDownloadPath() + "/" + imgRelativePath);
+    try {
+      downloadPicture(srcAddress, Setting.getSetting().getDownloadPath() + "/" + imgRelativePath);
+    } catch (MalformedURLException e) {
+      element.attr("src", srcAddress);
+      element.attr("alt", srcAddress);
+      return element;
+    }
     element.attr("src", imgRelativePath);
     element.attr("alt", srcAddress);
     return element;
