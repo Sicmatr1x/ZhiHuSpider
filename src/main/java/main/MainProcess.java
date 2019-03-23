@@ -122,9 +122,7 @@ public class MainProcess {
 
   public static void main(String[] args) {
     MainProcess mainProcess = new MainProcess();
-    while (true) {
-      mainProcess.run();
-      System.out.println("finish");
-    }
+    mainProcess.run();
+    System.out.println("finish");
   }
 }
