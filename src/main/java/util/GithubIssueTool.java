@@ -2,6 +2,7 @@ package util;
 
 import beans.IssueComment;
 import java.io.IOException;
+import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -14,6 +15,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import spider.GitHubCommentHtmlUtil;
 
 public class GithubIssueTool {
   private final static String GET_ISSUE_COMMENT_LIST_URL = "https://api.github.com/repos/:owner/:repo/issues/:number/comments";
@@ -72,17 +74,35 @@ public class GithubIssueTool {
   }
 
   @JsonIgnore
-  public IssueComment[] getIssueCommentList(){
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      IssueComment[] issueCommentList = objectMapper.readValue(this.getCommonList(), IssueComment[].class);
-      return issueCommentList;
-    } catch (JsonParseException e) {
-      e.printStackTrace();
-    } catch (JsonMappingException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
+  public IssueComment[] getIssueCommentList(boolean isGitHubApi){
+    if(isGitHubApi) {
+      ObjectMapper objectMapper = new ObjectMapper();
+      try {
+        IssueComment[] issueCommentList = objectMapper.readValue(this.getCommonList(), IssueComment[].class);
+        return issueCommentList;
+      } catch (JsonParseException e) {
+        e.printStackTrace();
+      } catch (JsonMappingException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      GitHubCommentHtmlUtil gitHubCommentHtmlUtil = new GitHubCommentHtmlUtil();
+      gitHubCommentHtmlUtil.setAddress("https://github.com/" + this.owner + "/" + this.repo + "/" + this.issueNumber); // https://github.com/Sicmatr1x/CommandTest/issues/3
+      try {
+        gitHubCommentHtmlUtil.parse();
+        List<String> commentList = gitHubCommentHtmlUtil.getCommentList();
+        IssueComment[] issueCommentList = new IssueComment[commentList.size()];
+        for (int i = 0; i < commentList.size(); i++) {
+//          System.out.println(commentList.get(i));
+          issueCommentList[i] = new IssueComment();
+          issueCommentList[i].setBody(commentList.get(i));
+        }
+        return issueCommentList;
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     return null;
   }

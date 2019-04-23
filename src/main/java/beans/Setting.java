@@ -16,6 +16,7 @@ public class Setting {
   private String downloadPath;
   private GithubIssueTool githubIssueTool;
   private int lastWorkId;
+  private String lastWorkBody;
 
   public String getDownloadPath() {
     return downloadPath;
@@ -41,12 +42,21 @@ public class Setting {
     this.lastWorkId = lastWorkId;
   }
 
+  public String getLastWorkBody() {
+    return lastWorkBody;
+  }
+
+  public void setLastWorkBody(String lastWorkBody) {
+    this.lastWorkBody = lastWorkBody;
+  }
+
   @Override
   public String toString() {
     return "Setting{" +
         "downloadPath='" + downloadPath + '\'' +
         ", githubIssueTool=" + githubIssueTool +
         ", lastWorkId=" + lastWorkId +
+        ", lastWorkBody='" + lastWorkBody + '\'' +
         '}';
   }
 

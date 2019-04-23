@@ -13,7 +13,7 @@ public class MainProcessTest {
     mainProcess.initSetting();
     mainProcess.initHtmlUtilMap();
 //    mainProcess.initCommandList();
-    String address = "https://zhuanlan.zhihu.com/p/58820047?utm_source=ZHShareTargetIDMore&utm_medium=social&utm_oi=599879765319094272";
+    String address = "https://zhuanlan.zhihu.com/p/59012054";
     HtmlUtil htmlUtil = mainProcess.getHtmlUtilMap().get(ZhihuZhuanlanHtmlUtil.DOMAIN);
     // When
     try {
@@ -31,10 +31,11 @@ public class MainProcessTest {
     mainProcess.initHtmlUtilMap();
 //    mainProcess.initCommandList();
     String[] addressList = {
-        "https://zhuanlan.zhihu.com/p/58822501"
+        "https://www.zhihu.com/question/37245305/answer/594992846",
+        "https://www.zhihu.com/question/20134551/answer/628918032"
     };
     for(int i = 0; i < addressList.length; i++){
-      HtmlUtil htmlUtil = mainProcess.getHtmlUtilMap().get(ZhihuZhuanlanHtmlUtil.DOMAIN);
+      HtmlUtil htmlUtil = mainProcess.getHtmlUtilMap().get(ZhihuHtmlUtil.DOMAIN);
       // When
       try {
         mainProcess.downloadWebPage(addressList[i], htmlUtil);

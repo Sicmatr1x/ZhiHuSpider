@@ -5,6 +5,7 @@ import beans.Setting;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import spider.GitHubCommentHtmlUtil;
 import spider.HtmlUtil;
 import spider.ZhihuHtmlUtil;
 import spider.ZhihuZhuanlanHtmlUtil;
@@ -37,7 +38,7 @@ public class MainProcess {
   }
 
   public void initCommandList() {
-    this.issueCommentList = this.githubIssueTool.getIssueCommentList();
+    this.issueCommentList = this.githubIssueTool.getIssueCommentList(false);
   }
 
   public void downloadWebPage(String address, HtmlUtil htmlUtil) throws IOException {
