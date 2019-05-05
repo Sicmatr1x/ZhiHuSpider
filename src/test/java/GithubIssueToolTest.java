@@ -13,7 +13,7 @@ public class GithubIssueToolTest {
     String issueNumber = "3";
     GithubIssueTool githubIssueTool = new GithubIssueTool(owner, repo, issueNumber);
     // When
-    IssueComment[] issueCommentList = githubIssueTool.getIssueCommentList();
+    IssueComment[] issueCommentList = githubIssueTool.getIssueCommentList(true);
     // Then
     for(IssueComment issueComment : issueCommentList){
       System.out.println(issueComment);

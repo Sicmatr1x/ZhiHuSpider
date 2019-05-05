@@ -38,7 +38,7 @@ public class MainProcess {
   }
 
   public void initCommandList() {
-    this.issueCommentList = this.githubIssueTool.getIssueCommentList(false);
+    this.issueCommentList = this.githubIssueTool.getIssueCommentList(true);
   }
 
   public void downloadWebPage(String address, HtmlUtil htmlUtil) throws IOException {
@@ -87,22 +87,27 @@ public class MainProcess {
 
   public int process() throws IOException {
     // 在获取到的issueCommentList里找上次保存的 comment id
-    int begIndex = this.issueCommentList.length;
-    for (int i = 0; i < this.issueCommentList.length; i++) {
-      if (this.issueCommentList[i].getId() == this.setting.getLastWorkId()) {
-        begIndex = i;
+    if (this.setting.getLastWorkId() != 0) {
+      int begIndex = this.issueCommentList.length;
+      for (int i = 0; i < this.issueCommentList.length; i++) {
+        if (this.issueCommentList[i].getId() == this.setting.getLastWorkId()) {
+          begIndex = i;
+        }
       }
-    }
 
-    int downloadNum = 0;
-    if (begIndex == this.issueCommentList.length) { // 没找到
+      int downloadNum = 0;
+      if (begIndex == this.issueCommentList.length) { // 没找到
 
-    } else if (begIndex == this.issueCommentList.length - 1) { // 上次爬取到了最后一个元素
-      return 0;
-    } else {// 在上次爬取到的 comment 之后还有新的 comment
-      downloadNum = this.downloadWebPageList(begIndex);
+      } else if (begIndex == this.issueCommentList.length - 1) { // 上次爬取到了最后一个元素
+        return 0;
+      } else {// 在上次爬取到的 comment 之后还有新的 comment
+        downloadNum = this.downloadWebPageList(begIndex);
+      }
+      return downloadNum;
+    } else {
+      //TODO:读取 lastWorkBody 在获取到的issueCommentList里找上次保存的 comment
     }
-    return downloadNum;
+    return 0;
   }
 
   private void saveSetting(){
