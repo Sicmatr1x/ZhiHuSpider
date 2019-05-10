@@ -38,17 +38,23 @@ public class easy {
   @Test
   public void startWithGitHubCommentHtmlUtil() {
     GitHubCommentHtmlUtil gitHubCommentHtmlUtil = new GitHubCommentHtmlUtil();
-    gitHubCommentHtmlUtil.setAddress("https://github.com/Sicmatr1x/CommandTest/issues/3");
+    String githubCommentPath = "https://github.com/Sicmatr1x/CommandTest/issues/3";
+    gitHubCommentHtmlUtil.setAddress(githubCommentPath);
     try {
+      System.out.println("start to get: githubCommentPath");
       gitHubCommentHtmlUtil.parse();
     } catch (IOException e) {
       e.printStackTrace();
     }
     List<String> commentList = gitHubCommentHtmlUtil.getCommentList();
-    String lastWorkComment = "https://zhuanlan.zhihu.com/p/64246057?utm_source=ZHShareTargetIDMore&utm_medium=social&utm_oi=599879765319094272";
+    System.out.println("get githubCommentList finish: total=" + commentList.size());
+    String lastWorkComment = "https://www.zhihu.com/question/279255504/answer/668498268?utm_source=ZHShareTargetIDMore&utm_medium=social&utm_oi=599879765319094272";
+    System.out.println("begin to work...");
+    boolean keepOnFlag = false;
     for (int i = 0; i < commentList.size(); i++) {
       String curComment = commentList.get(i);
-      if (lastWorkComment == null || "".equals(lastWorkComment) || lastWorkComment.equals(curComment)) {
+      if (keepOnFlag) {
+        System.out.println("work start at: " + i + "/" + commentList.size());
         boolean isRecognizedDomain = false;
         for (Map.Entry<String, HtmlUtil> entry : this.htmlUtilMap.entrySet()) {
           if (curComment.contains(entry.getKey())) {
@@ -65,11 +71,15 @@ public class easy {
             // 使用默认解析器下载
           }
         }
+        try {
+          System.out.println("sleep...");
+          Thread.sleep(30 * 1000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
-      try {
-        Thread.sleep(30 * 1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+      if (lastWorkComment == null || "".equals(lastWorkComment) || lastWorkComment.equals(curComment)) {
+        keepOnFlag = true;
       }
     }
   }
